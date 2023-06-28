@@ -21,77 +21,6 @@
  */
 //# sourceMappingURL=editor-components-bundle.js.map
 
-WL.registerComponent('EstructuraJavaScript', {
-    param: {type: WL.Type.Float, default: 1.0},
-}, {
-    init: function() {
-        console.log('init() with param', this.param);
-    },
-    start: function() {
-        console.log('start() with param', this.param);
-    },
-    update: function(dt) {
-        console.log('update() with delta time', dt);
-    },
-});
-
-WL.registerComponent('button', {
-    buttonMeshObject: {type: WL.Type.Object},
-    hoverMaterial: {type: WL.Type.Material},
-}, {
-    start: function() {
-        this.mesh = this.buttonMeshObject.getComponent('mesh');
-        this.defaultMaterial = this.mesh.material;
-
-        this.target = this.object.getComponent('cursor-target');
-        this.target.addHoverFunction(this.onHover.bind(this));
-        this.target.addUnHoverFunction(this.onUnHover.bind(this));
-        this.target.addDownFunction(this.onDown.bind(this));
-        this.target.addUpFunction(this.onUp.bind(this));
-
-        this.soundClick = this.object.addComponent('howler-audio-source', {src: 'sfx/click.wav', spatial: true});
-        this.soundUnClick = this.object.addComponent('howler-audio-source', {src: 'sfx/unclick.wav', spatial: true});
-    },
-
-    onHover: function(_, cursor) {
-        this.mesh.material = this.hoverMaterial;
-        if(cursor.type == 'finger-cursor') {
-            this.onDown(_, cursor);
-        }
-
-        this.hapticFeedback(cursor.object, 0.5, 50);
-    },
-
-    onDown: function(_, cursor) {
-        this.soundClick.play();
-        this.buttonMeshObject.translate([0.0, -0.1, 0.0]);
-        this.hapticFeedback(cursor.object, 1.0, 20);
-    },
-
-    onUp: function(_, cursor) {
-        this.soundUnClick.play();
-        this.buttonMeshObject.translate([0.0, 0.1, 0.0]);
-        this.hapticFeedback(cursor.object, 0.7, 20);
-    },
-
-    onUnHover: function(_, cursor) {
-        this.mesh.material = this.defaultMaterial;
-        if(cursor.type == 'finger-cursor') {
-            this.onUp(_, cursor);
-        }
-
-        this.hapticFeedback(cursor.object, 0.3, 50);
-    },
-
-    hapticFeedback: function(object, strength, duration) {
-        const input = object.getComponent('input');
-        if(input && input.xrInputSource) {
-            const gamepad = input.xrInputSource.gamepad;
-            if(gamepad && gamepad.hapticActuators) gamepad.hapticActuators[0].pulse(strength, duration);
-        }
-    },
-});
-
 WL.registerComponent('button', {
     buttonMeshObject: {type: WL.Type.Object},
     hoverMaterial: {type: WL.Type.Material},
@@ -136,7 +65,7 @@ WL.registerComponent('button', {
         div.className = "audio-control"
         div.innerHTML = '<p id="audio-control" class="white-circle"> <img src="lex.png"><canvas class="visualizer"></canvas></p><p><span id="message"></span></p>';
         // Add the div element to the body of the HTML page document.body.appendChild(div);
-
+        document.body.appendChild(div);
     },
 
     onHover: function(_, cursor) {
