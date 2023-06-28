@@ -163,7 +163,7 @@ WL.registerComponent('button', {
         var waveform = window.Waveform();
         var message = document.getElementById('message'); var config, conversation;
         message.textContent = 'Passive';
-        AWS.config.credentials = new AWS.Credentials("AKIAXAOADRRATIDQBU2", "Rr7RY15T6cGqvE3oLJt1feWSDwwwnbrECQJhZNk", null);
+        AWS.config.credentials = new AWS.Credentials("AKIAXAOA3E3CATIDQBU2", "Rr7RY15T6cGqvE3oLJt1fe/yBRnEanbrECQJhZNk", null);
         AWS.config.region = 'us-east-1'; //console.log(AWS.config.credentials);
         config = {
         lexConfig: { botName: "Reservaunhotel" }
